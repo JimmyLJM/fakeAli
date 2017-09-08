@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jimmy.springBootDemo.mapper.UserMapper">
+    <!-- mysql 分页尾 -->
+    <sql id="pagination_Tail">
+        <![CDATA[ limit #{pager.firstResult} , #{pager.pageSize}]]>
+    </sql>
+    <!-- count * from -->
+    <sql id="count_Start_Head">
+        <![CDATA[select count(*) from ( ]]>
+    </sql>
+    <sql id="count_Start_Tail">
+        <![CDATA[) countObj ]]>
+    </sql>
+
+    <resultMap id="UserMap" type="com.jimmy.springBootDemo.domain.User">
+        <result property="id" column="id"/>
+        <result property="loginName" column="login_Name"/>
+        <result property="passWord" column="password"/>
+        <result property="name" column="name"/>
+        <result property="districtId" column="district_id"/>
+        <result property="empId" column="empid"/>
+        <result property="email" column="email"/>
+        <result property="qq" column="qq"/>
+        <result property="phone" column="phone"/>
+        <result property="mobile" column="mobile"/>
+        <result property="userType" column="user_Type"/>
+        <result property="loginIp" column="login_Ip"/>
+        <result property="loginDate" column="login_Date"/>
+        <result property="remarks" column="remarks"/>
+        <result property="statue" column="statue"/>
+        <result property="createBy" column="create_By"/>
+        <result property="createDate" column="create_Date"/>
+        <result property="updateBy" column="update_By"/>
+        <result property="updateDate" column="update_Date"/>
+    </resultMap>
+
+    <!--  基本sql引用  -->
+    <sql id="sql_all_cls">
+        select
+            t.id,
+            t.login_name,
+            t.password,
+            t.name,
+            t.district_id,
+            t.empid,
+            t.email,
+            t.qq,
+            t.phone,
+            t.mobile,
+            t.user_type,
+            t.login_ip,
+            t.login_date,
+            t.remarks,
+            t.statue,
+            t.create_by,
+            t.create_date,
+            t.update_by,
+            t.update_date
+        from sys_user  t
+    </sql>
+
+    <!--  基本sql引用  -->
+    <sql id="sql_where_cls">
+        <if test="model.id!=null ">and t.id = #{model.id} </if>
+        <if test="model.loginName!=null  and model.loginName!='' ">and t.login_name = #{model.loginName} </if>
+        <if test="model.passWord!=null  and model.passWord!='' ">and t.password = #{model.passWord} </if>
+        <if test="model.name!=null  and model.name!='' ">and t.name = #{model.name} </if>
+        <if test="model.districtId!=null  ">and t.district_id = #{model.districtId} </if>
+        <if test="model.empId!=null  ">and t.empid = #{model.empId} </if>
+        <if test="model.email!=null  and model.email!='' ">and t.email = #{model.email} </if>
+        <if test="model.qq!=null  and model.qq!='' ">and t.qq = #{model.qq} </if>
+        <if test="model.phone!=null  and model.phone!='' ">and t.phone = #{model.phone} </if>
+        <if test="model.mobile!=null  and model.mobile!='' ">and t.mobile = #{model.mobile} </if>
+        <if test="model.statue!=null  and model.statue!='' ">and t.statue = #{model.statue} </if>
+        <if test="model.userType!=null  and model.userType!='' ">and t.user_type = #{model.userType} </if>
+        <if test="model.loginIp!=null  and model.loginIp!='' ">and t.login_Ip = #{model.loginIp} </if>
+        <if test="model.loginDate!=null ">and t.login_date = #{model.loginDate} </if>
+        <if test="model.remarks!=null  and model.remarks!='' ">and t.remarks = #{model.remarks} </if>
+        <if test="model.createBy!=null  and model.createBy!='' ">and t.create_by = #{model.createBy} </if>
+        <if test="model.createDate!=null  and model.createDate!='' ">and t.create_date = #{model.createDate} </if>
+        <if test="model.updateBy!=null  and model.updateBy!='' ">and t.update_by = #{model.updateBy} </if>
+        <if test="model.updateDate!=null  and model.updateDate!='' ">and t.update_date = #{model.updateDate} </if>
+    </sql>
+    <!-- 创建用户  -->
+    <insert id="createUser"  useGeneratedKeys="true" keyProperty="model.id">
+        insert into sys_user (
+            login_Name, password, name, district_id, empid,
+            email, qq, phone , mobile, user_Type,
+            login_Ip, login_Date, remarks,
+            statue, create_By, create_Date, update_By, update_Date
+        )
+        values (
+            #{model.loginName}, #{model.passWord}, #{model.name}, #{model.district_id}, #{model.empid},
+            #{model.email}, #{model.qq}, #{model.phone} , #{model.mobile}, #{model.user_Type},
+            #{model.login_Ip}, #{model.login_Date}, #{model.remarks},
+            #{model.statue}, #{model.create_By}, #{model.create_Date}, #{model.update_By}, #{model.update_Date}
+        )
+    </insert>
+
+    <!--  删除 -->
+    <delete id="deleteById" >
+        delete  from
+        sys_user
+        where
+            1= 2
+           <if test="id != null and id != '' "> and id = #{id}</if>
+    </delete>
+
+    <!-- 根据id获取user对象内容  -->
+    <select id="getById" resultMap="UserMap">
+        <include refid="sql_all_cls" />
+        where 1=1
+        <if test="id != null and id != '' "> and id = #{id}</if>
+    </select>
+
+    <!--  获取list -->
+    <select id="searchList" resultMap="UserMap">
+        <include refid="sql_all_cls" />
+        where 1=1
+        <include refid="sql_where_cls" />
+    </select>
+</mapper>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome!</title>
+</head>
+<body>
+<h1>Welcome Jimmy</h1>
+<p>Our latest product:</p>
+    <#assign var = "hello spring boot"/>
+    <front size="18">${var}</front>
+<div>
+    <ul>
+        <#list userList as item>
+            <li>${item.name}的生日${item.createDate!?string('yyyy-MM-dd')}</li>
+        </#list>
+    </ul>
+</div>
+
+</body>
+</html>

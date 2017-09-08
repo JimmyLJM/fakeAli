@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    #加载yaml文件
+    active: dev

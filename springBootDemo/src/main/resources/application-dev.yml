@@ -1,0 +1,84 @@
+server:
+  port: 8081
+  context-path:  /RTOGOD
+  connection-timeout: 5000
+# 数据库链接、连接池配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/sw?useUnicode=true&characterEncoding=UTF-8
+    username: jimmy
+    password: jimmy
+   #使用druid
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+     # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+       # 配置一个连接在池中最小生存的时间，单位是毫秒
+      time-between-eviction-runs-millis: 300000
+      validation-query:  SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-while-idle: true
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      # 是否缓存preparedStatement，也就是PSCache。
+      # PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭
+      pool-prepared-statements: false
+       #  max-pool-prepared-statement-per-connection-size: 20
+       #  配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+       #  可以通过 spring.datasource.druid.filters=stat,wall,log4j ... 的方式来启用相应的内置Filter，
+       #  不过这些Filter都是默认配置。如果默认配置不能满足需求,可以采用以下方式配置
+#      filter:
+      # 配置StatFilter
+#        stat:
+#          db-type: h2
+#          log-slow-sql: true
+#          slow-sql-millis: 2000
+       # 配置wallFilter
+#        wall:
+#          db-type: h2
+#          enabled: true
+#          config:
+#            delete-allow: false
+#            drop-table-allow: false
+# 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+#     ! connect-properties:  ruid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+     # 合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: true
+  # freemarker配置，设定ftl文件路径
+  freemarker:
+    template-loader-path:  classpath:/templates
+    suffix: .html
+    cache: false
+    request-context-attribute: request
+  mvc:
+  # 设定静态文件路径，js,css等
+    static-path-pattern: /static/**
+  # redis集中式缓存
+  redis:
+    host: localhost
+    port: 6379
+    pool:
+      min-idle: 0
+      max-idle: 8
+      max-active: 8
+      max-wait: -1
+
+#mybatis配置xml
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mappers/**/*Mapper.xml
+  type-aliases-package:  com.jimmy.springBootDemo.damain
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+myProps: #自定义的属性和值
+  adminPath: /manager

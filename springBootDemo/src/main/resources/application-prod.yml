@@ -1,0 +1,11 @@
+server:
+  port: 8081
+  context-path:  /sw
+  connection-timeout: 5000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/sw
+    data-username: jimmy
+    data-password: jimmy
