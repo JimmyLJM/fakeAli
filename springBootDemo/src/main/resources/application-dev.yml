@@ -51,14 +51,17 @@ spring:
      # 合并多个DruidDataSource的监控数据
       use-global-data-source-stat: true
   # freemarker配置，设定ftl文件路径
-  freemarker:
-    template-loader-path:  classpath:/templates
-    suffix: .html
-    cache: false
-    request-context-attribute: request
+#  freemarker:
+#    template-loader-path:  classpath:/templates
+#    suffix: .html
+#    cache: false
+#    request-context-attribute: request
+
   mvc:
   # 设定静态文件路径，js,css等
     static-path-pattern: /static/**
+  cache:
+    type: redis
   # redis集中式缓存
   redis:
     host: localhost
@@ -68,6 +71,26 @@ spring:
       max-idle: 8
       max-active: 8
       max-wait: -1
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    check-template-location: true
+    enabled: true
+  mail:
+    host: ${mymail.host}
+    username: ${mymail.username}
+    password: ${mymail.password}
+    properties:
+      mail:
+        stmp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 #mybatis配置xml
 mybatis:
@@ -80,5 +103,9 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
-myProps: #自定义的属性和值
-  adminPath: /manager
+
+## 自定义属性
+mymail:
+  host: smtp.sina.com.cn
+  username: jimmycoding@sina.com
+  password: jimmy123
