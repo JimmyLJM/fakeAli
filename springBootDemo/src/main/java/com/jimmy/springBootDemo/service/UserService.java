@@ -42,6 +42,8 @@ public interface UserService {
      */
     User getByUser(User user);
 
+    User getByLoginName(String LoginName);
+
     /**
      * 根据传入对象的属性查询user列表
      * @param user

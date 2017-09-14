@@ -20,5 +20,5 @@ public interface UserMapper {
     public List<User> searchList(@Param("model") User user);             // 查询列表
     public List<User> queryForPage(@Param("model") User user);     // 分页查询
     public void deleteById(@Param("id") Integer id);                              // 根据主键删除
-
+    public User getByLoginName(@Param("LoginName")String LoginName);
 }

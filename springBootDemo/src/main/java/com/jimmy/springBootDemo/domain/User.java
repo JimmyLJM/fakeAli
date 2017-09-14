@@ -2,6 +2,8 @@ package com.jimmy.springBootDemo.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * author : jimmyLJM
@@ -28,6 +30,23 @@ public class User implements Serializable{
     private Integer updateBy;          //    修改人
     private Date updateDate;           //    最后一次处理日期
     private String remarks;                //   备注
+
+    private Set<Role> Roles = new HashSet<Role>(0);// Code12
+
+
+    public User() {
+    }
+
+    public User(String name, String email, String passWord, Date loginDate, Set<Role> Roles) {
+
+        this.name = name;
+        this.email = email;
+        this.passWord = passWord;
+        this.loginDate = loginDate;
+        this.Roles = Roles;
+
+    }
+
 
     public Integer getId() {
         return id;
@@ -183,5 +202,11 @@ public class User implements Serializable{
         this.mobile = mobile;
     }
 
+    public Set<Role> getRoles() {
+        return Roles;
+    }
 
+    public void setRoles(Set<Role> roles) {
+        Roles = roles;
+    }
 }

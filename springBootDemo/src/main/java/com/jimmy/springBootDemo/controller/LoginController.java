@@ -1,48 +1,59 @@
 package com.jimmy.springBootDemo.controller;
 
-import com.jimmy.springBootDemo.config.basic.BaseController;
+import com.jimmy.springBootDemo.service.UserService;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.annotation.Resource;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
 
 /**
  * author : jimmyLJM on 2017-09-07
  */
 @Controller
-public class LoginController extends BaseController{
+public class LoginController {
 
 
-    /**
-     *
-     * @return
-     */
-    @GetMapping("/login")
-    public String Login(HttpServletRequest request, HttpServletResponse response){
-        // 判断是否已经登录，若已经登录则跳转至登录成功方法否则返回登录页
+    @Resource
+    private UserService userService;
 
-//        return "redirect:" + index;
+    @RequestMapping("/home")
+    public String home() {
+        return "home";
 
+    }
+
+//    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/admin",method = RequestMethod.POST)
+    public String toAdmin(){
+        return "helloAdmin";
+    }
+
+    @RequestMapping("/hello")
+    public String hello() {
+
+        return "hello";
+
+    }
+
+    @RequestMapping("/login")
+    public String login(){
         return "login";
     }
 
-    /**
-     *
-     * @return
-     */
-    @PostMapping({"/","/index"})
-    public String Login(){
-        return "login";
+    @RequestMapping("/")
+    public String root() {
+        return "index";
+
     }
 
-
-
-    @GetMapping("/logOut")
-    public String logOut(){
-        // 清除session信息
-
-        return "login";
+    @RequestMapping("/403")
+    public String error(){
+        return "403";
     }
 }
