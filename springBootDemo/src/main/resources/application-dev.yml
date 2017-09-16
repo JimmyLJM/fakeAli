@@ -109,3 +109,4 @@ mymail:
   host: smtp.sina.com.cn
   username: jimmycoding@sina.com
   password: jimmy123
+  fromMail: jimmycoding@sina.com
